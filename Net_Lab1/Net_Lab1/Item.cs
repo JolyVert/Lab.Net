@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Net_Lab1
+﻿namespace Net_Lab1
 {
     internal class Item
     {

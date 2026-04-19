@@ -1,4 +1,5 @@
-﻿namespace Net_Lab1
+﻿
+namespace Net_Lab1
 {
     internal class Program
     {

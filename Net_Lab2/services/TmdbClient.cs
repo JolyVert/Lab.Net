@@ -27,14 +27,14 @@ public sealed class TmdbClient : IDisposable
 
     public async Task<TmdbSearchResponse?> SearchMoviesAsync(string query)
     {
-        var url = $"search/movie?query={Uri.EscapeDataString(query)}&include_adult=false&language=pl-PL";
+        var url = $"search/movie?query={Uri.EscapeDataString(query)}&include_adult=false&language=en-En";
         var json = await _http.GetStringAsync(url);
         return JsonSerializer.Deserialize<TmdbSearchResponse>(json);
     }
 
     public async Task<TmdbMovieDetails?> GetMovieDetailsAsync(int movieId)
     {
-        var json = await _http.GetStringAsync($"movie/{movieId}?language=pl-PL");
+        var json = await _http.GetStringAsync($"movie/{movieId}?language=en-En");
         return JsonSerializer.Deserialize<TmdbMovieDetails>(json);
     }
 
