@@ -34,12 +34,6 @@ Token jest ładowany w następującej kolejności:
 
 ### Opcja 1 — plik `.env` (zalecana)
 
-Skopiuj plik szablonowy i wpisz swój token:
-
-```bash
-cp .env.example .env
-```
-
 Zawartość pliku `.env`:
 
 ```
@@ -47,7 +41,6 @@ TMDB_TOKEN=twój_token_bearer_tutaj
 ```
 
 > Plik `.env` jest wpisany do `.gitignore` i **nie zostanie zacommitowany**.  
-> Nie usuwaj pliku `.env.example` — służy jako szablon dla innych użytkowników.
 
 ### Opcja 2 — zmienna środowiskowa
 
@@ -85,12 +78,6 @@ Przy pierwszym uruchomieniu EF Core automatycznie tworzy plik `movies.db` i stos
 | `models/TmdbDtos.cs` | Rekordy DTO do deserializacji odpowiedzi JSON z TMDb API |
 | `Migrations/` | Migracje EF Core (wygenerowane automatycznie) |
 
-## Kompilacja
-
-```bash
-dotnet build
-```
-
 ## Migracje bazy danych
 
 Aby dodać nową migrację (po zmianie modelu):
@@ -99,7 +86,3 @@ Aby dodać nową migrację (po zmianie modelu):
 dotnet ef migrations add NazwaMigracji
 dotnet ef database update
 ```
-
-## Licencja
-
-W repozytorium nie określono licencji; zasady użytkowania wynikają z wymagań zajęć lub organizacji.
