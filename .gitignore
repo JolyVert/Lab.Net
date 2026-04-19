@@ -6,6 +6,11 @@
 # dotenv files
 .env
 
+# SQLite databases (Net_Lab2 runtime artifact)
+*.db
+*.db-shm
+*.db-wal
+
 # User-specific files
 *.rsuser
 *.suo

@@ -9,12 +9,42 @@ using Microsoft.EntityFrameworkCore;
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
-//var token = Environment.GetEnvironmentVariable("TMDB_TOKEN");
-var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZDViNjRjOGY2MDM2Yjc3MDcyMjk4YWZmNzE5ZjQ3MCIsIm5iZiI6MTc2ODkzNDE1MS41MzQwMDAyLCJzdWIiOiI2OTZmY2IwN2JjMGU3YzhlMWI3YWJmMjUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.sknb7zG3l1rrhhquIvFGhdIIrCI8kcKYa2YD7wu9Qj8";
+var token = ReadDotEnv("TMDB_TOKEN") ?? Environment.GetEnvironmentVariable("TMDB_TOKEN");
 if (string.IsNullOrWhiteSpace(token))
 {
-    Console.WriteLine("Ustaw zmienną środowiskową TMDB_TOKEN z Bearer tokenem z TMDb.");
+    Console.WriteLine("Brak tokenu TMDb. Utwórz plik .env w katalogu projektu z wpisem:");
+    Console.WriteLine("  TMDB_TOKEN=twój_token_bearer");
+    Console.WriteLine("Lub ustaw zmienną środowiskową TMDB_TOKEN.");
     return;
+}
+
+static string? ReadDotEnv(string key)
+{
+    var envFile = FindDotEnv();
+    if (envFile is null) return null;
+    foreach (var line in File.ReadLines(envFile))
+    {
+        var trimmed = line.Trim();
+        if (trimmed.StartsWith('#') || !trimmed.Contains('=')) continue;
+        var sep = trimmed.IndexOf('=');
+        if (trimmed[..sep].Trim() == key)
+            return trimmed[(sep + 1)..].Trim();
+    }
+    return null;
+}
+
+static string? FindDotEnv()
+{
+    // Szukaj .env zaczynając od katalogu roboczego i idąc w górę.
+    // Obsługuje zarówno "dotnet run" (cwd = projekt) jak i uruchamianie z VS (cwd = bin/Debug/...).
+    var dir = new DirectoryInfo(Directory.GetCurrentDirectory());
+    while (dir is not null)
+    {
+        var candidate = Path.Combine(dir.FullName, ".env");
+        if (File.Exists(candidate)) return candidate;
+        dir = dir.Parent;
+    }
+    return null;
 }
 
 await using var db = new MovieDbContext();
